@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conceptos básicos de probabilidad</title>
+  <link rel="stylesheet" href="Estilo.css" />
+</head>
+<body>
+  <header class="topbar">
+    <img src="Imagenes/logo.png" alt="Logo" class="logo">
+    <a href="Acerca.html" class="about-btn">Acerca de</a>
+    <a href="index.html" class="home-btn">Inicio</a>
+
+    <h1>Conceptos básicos de probabilidad</h1>
+    <p class="subtitle">
+      Probabilidad, regla de la suma, productos, eventos y complementos.
+    </p>
+  </header>
+
+  <main class="container">
+
+    <!-- probabilidad -->
+    <section class="card fade">
+      <h2>Probabilidad y casos favorables/posibles</h2>
+      <p>
+        La probabilidad de un evento se define como el cociente entre el número de
+        resultados favorables y el número de resultados posibles, cuando todos los
+        resultados son igualmente probables.
+      </p>
+
+      <div class="formula-box">
+        <img src="Imagenes/prob_basica.png"
+             alt="Fórmula P(A) = casos favorables / casos posibles"
+             class="formula-img">
+        </div>
+        <ul class="vars-list">
+          <li><strong>P(A):</strong> probabilidad de que ocurra el evento A.</li>
+          <li><strong>Casos favorables:</strong> resultados que hacen que ocurra A.</li>
+          <li><strong>Casos posibles:</strong> total de resultados posibles.</li>
+        </ul>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="fav">Casos favorables</label>
+          <input type="number" id="fav" min="0" step="1" />
+        </div>
+        <div class="field-group">
+          <label for="pos">Casos posibles</label>
+          <input type="number" id="pos" min="1" step="1" />
+        </div>
+
+        <button class="btn-calc" type="button" onclick="calcularProbabilidadBasica()">
+          Calcular P(A)
+        </button>
+      </div>
+
+      <p id="prob-basica-resultado" class="resultado"></p>
+    </section>
+
+    <!-- regla de la suma -->
+    <section class="card fade">
+        <h2>REGLA DE LA SUMA (EVENTOS EXCLUYENTES)</h2>
+        <p>
+            Dos eventos son <strong>excluyentes</strong> si no pueden ocurrir al mismo tiempo.
+            Cuando A y B son excluyentes, la probabilidad de que ocurra A o B se obtiene sumando
+            sus probabilidades.
+        </p>
+
+        <div class="formula-box">
+            <img src="Imagenes/excl.png"
+                alt="Fórmula P(A ∪ B) = P(A) + P(B)"
+                class="formula-img">
+        </div>
+
+        <div class="vars-list">
+            <ul>
+            <li><strong>P(A):</strong> probabilidad del evento A.</li>
+            <li><strong>P(B):</strong> probabilidad del evento B.</li>
+            <li><strong>P(A ∪ B):</strong> probabilidad de que ocurra A o B.</li>
+            </ul>
+        </div>
+
+        <!-- Datos para calcular P(A) y P(B) a partir de casos -->
+        <div class="form-row">
+            <div class="field-group">
+            <label for="favA">Casos favorables de A</label>
+            <input type="number" id="favA" min="0" step="1" />
+            </div>
+            <div class="field-group">
+            <label for="posA">Casos posibles de A</label>
+            <input type="number" id="posA" min="1" step="1" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="field-group">
+            <label for="favB">Casos favorables de B</label>
+            <input type="number" id="favB" min="0" step="1" />
+            </div>
+            <div class="field-group">
+            <label for="posB">Casos posibles de B</label>
+            <input type="number" id="posB" min="1" step="1" />
+            </div>
+
+            <button class="btn-calc" type="button" onclick="calcularSumaExcluyentesCasos()">
+            Calcular P(A o B)
+            </button>
+        </div>
+
+        <p id="suma-excl-resultado" class="resultado"></p>
+        </section>
+
+
+    <!-- eventos no excluyentes -->
+    <section class="card fade">
+        <h2>REGLA DE LA SUMA (EVENTOS NO EXCLUYENTES)</h2>
+        <p>
+            Cuando dos eventos pueden ocurrir al mismo tiempo (no excluyentes), se debe
+            restar la intersección para no contarla dos veces. En este caso, usamos
+            la fórmula:
+        </p>
+
+        <div class="formula-box">
+            <img src="Imagenes/noexcl.png"
+                alt="Fórmula P(A ∪ B) = P(A) + P(B) − P(A ∩ B)"
+                class="formula-img">
+        </div>
+
+        <div class="vars-list">
+            <ul>
+            <li><strong>P(A ∪ B):</strong> probabilidad de que ocurra A o B.</li>
+            <li><strong>P(A):</strong> probabilidad del evento A.</li>
+            <li><strong>P(B):</strong> probabilidad del evento B.</li>
+            <li><strong>P(A ∩ B):</strong> probabilidad de que ocurran A y B al mismo tiempo.</li>
+            </ul>
+        </div>
+
+        <!-- datos -->
+        <div class="form-row">
+            <div class="field-group">
+            <label for="noexcl-N">Casos posibles totales (N)</label>
+            <input type="number" id="noexcl-N" min="1" step="1" />
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="field-group">
+            <label for="noexcl-favA">Casos favorables de A</label>
+            <input type="number" id="noexcl-favA" min="0" step="1" />
+            </div>
+            <div class="field-group">
+            <label for="noexcl-favB">Casos favorables de B</label>
+            <input type="number" id="noexcl-favB" min="0" step="1" />
+            </div>
+            <div class="field-group">
+            <label for="noexcl-favAB">Casos favorables de A ∩ B</label>
+            <input type="number" id="noexcl-favAB" min="0" step="1" />
+            </div>
+
+            <button class="btn-calc" type="button" onclick="calcularSumaNoExcluyentesCasos()">
+            Calcular P(A o B)
+            </button>
+        </div>
+
+        <p id="suma-noexcl-resultado" class="resultado"></p>
+        </section>
+
+    <!-- regla del producto con eventos dependientes -->
+    <section class="card fade">
+      <h2>Regla del producto (eventos dependientes)</h2>
+      <p>
+        La regla del producto permite calcular la probabilidad de que ocurran A y B
+        cuando se conoce la probabilidad de A y la probabilidad condicional de B dado A.
+      </p>
+
+      <div class="formula-box">
+        <img src="Imagenes/producto_dep.png"
+            alt="Fórmula P(A ∩ B) = P(A) · P(B | A)"
+            class="formula-img">
+      </div>
+
+      <div class="vars-list">
+        <ul>
+          <li><strong>P(A):</strong> probabilidad de que ocurra el evento A.</li>
+          <li><strong>P(B | A):</strong> probabilidad de que ocurra B dado que ocurrió A.</li>
+          <li><strong>P(A ∩ B):</strong> probabilidad de que ocurran A y B a la vez.</li>
+        </ul>
+      </div>
+
+      <!-- datos -->
+      <div class="form-row">
+        <div class="field-group">
+          <label for="dep-N">Casos posibles totales (N)</label>
+          <input type="number" id="dep-N" min="1" step="1">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="dep-favA">Casos favorables de A</label>
+          <input type="number" id="dep-favA" min="0" step="1">
+        </div>
+
+        <div class="field-group">
+          <label for="dep-favAB">Casos favorables de A ∩ B</label>
+          <input type="number" id="dep-favAB" min="0" step="1">
+        </div>
+
+        <button class="btn-calc" type="button" onclick="calcularProductoDependienteCasos()">
+          Calcular P(A y B)
+        </button>
+      </div>
+
+      <p id="prod-resultado" class="resultado"></p>
+    </section>
+
+    <!-- eventos independientes y el complemento -->
+    <section class="card fade">
+      <h2>Eventos independientes y complemento</h2>
+      <p>
+        Dos eventos son <strong>independientes</strong> si la ocurrencia de uno no afecta a la
+        probabilidad del otro. El complemento de un evento A (denotado A') representa
+        que A no ocurre.
+      </p>
+
+      <div class="formula-box">
+        <img src="Imagenes/indep_compl.png"
+            alt="Fórmulas P(A ∩ B) = P(A) · P(B) y P(A') = 1 − P(A)"
+            class="formula-img">
+      </div>
+
+      <div class="vars-list">
+        <ul>
+          <li><strong>P(A ∩ B) = P(A) · P(B):</strong> regla para eventos independientes.</li>
+          <li><strong>P(A') = 1 − P(A):</strong> probabilidad de que A no ocurra.</li>
+        </ul>
+      </div>
+
+      <!-- independientes -->
+      <h3>Eventos independientes</h3>
+      <p>Supone que A y B son independientes. Usa el mismo número de casos posibles (N) para ambos.</p>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="indep-N">Casos posibles totales (N)</label>
+          <input type="number" id="indep-N" min="1" step="1">
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="indep-favA">Casos favorables de A</label>
+          <input type="number" id="indep-favA" min="0" step="1">
+        </div>
+        <div class="field-group">
+          <label for="indep-favB">Casos favorables de B</label>
+          <input type="number" id="indep-favB" min="0" step="1">
+        </div>
+
+        <button class="btn-calc" type="button" onclick="calcularIndependientesCasos()">
+          Calcular P(A y B)
+        </button>
+      </div>
+
+      <p id="indep-resultado" class="resultado"></p>
+
+      <!-- comple -->
+      <h3>Complemento de un evento</h3>
+      <p>Calcula la probabilidad de que <strong>no</strong> ocurra A a partir de casos favorables de A.</p>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="compl-N">Casos posibles totales (N)</label>
+          <input type="number" id="compl-N" min="1" step="1">
+        </div>
+        <div class="field-group">
+          <label for="compl-favA">Casos favorables de A</label>
+          <input type="number" id="compl-favA" min="0" step="1">
+        </div>
+
+        <button class="btn-calc" type="button" onclick="calcularComplementoCasos()">
+          Calcular P(A')
+        </button>
+      </div>
+
+      <p id="compl-resultado" class="resultado"></p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Proyecto final de Estadística I · 2025</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

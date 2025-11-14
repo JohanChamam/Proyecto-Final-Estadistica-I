@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Probabilidad condicional y dependencias</title>
+  <link rel="stylesheet" href="Estilo.css" />
+</head>
+<body>
+  <header class="topbar">
+    <img src="Imagenes/logo.png" alt="Logo UMG" class="logo">
+    <a href="Acerca.html" class="about-btn">Acerca de</a>
+    <a href="index.html" class="home-btn">Inicio</a>
+
+    <h1>Probabilidad condicional y dependencias</h1>
+    <p class="subtitle">
+      Cálculo de P(B | A) y análisis de dependencia entre eventos.
+    </p>
+  </header>
+
+  <main class="container">
+
+    <!-- condicional -->
+    <section class="card fade">
+      <h2>Probabilidad condicional</h2>
+      <p>
+        La probabilidad condicional permite calcular la probabilidad de que ocurra
+        un evento <strong>B</strong> cuando se sabe que otro evento <strong>A</strong> ya ocurrió.
+        Se define mediante la fórmula:
+      </p>
+
+      <div class="formula-box">
+        <img src="Imagenes/condicional.png"
+             alt="Fórmula P(B | A) = P(A ∩ B) / P(A)"
+             class="formula-img">
+      </div>
+
+      <div class="vars-list">
+        <ul>
+          <li><strong>P(B | A):</strong> Probabilidad de que ocurra B dado que ocurrió A.</li>
+          <li><strong>P(A ∩ B):</strong> Probabilidad de que ocurran A y B al mismo tiempo.</li>
+          <li><strong>P(A):</strong> Probabilidad de que ocurra A.</li>
+        </ul>
+      </div>
+
+      <h3>Cálculo a partir de conteos</h3>
+      <p>
+        Imagina una tabla de frecuencias con N observaciones (por ejemplo, pacientes,
+        estudiantes, encuestas, etc.). A partir del conteo de casos podemos obtener
+        P(A), P(A ∩ B) y luego P(B | A).
+      </p>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="cond-N">Casos posibles totales (N)</label>
+          <input type="number" id="cond-N" min="1" step="1" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="cond-favA">Casos favorables de A</label>
+          <input type="number" id="cond-favA" min="0" step="1" />
+        </div>
+        <div class="field-group">
+          <label for="cond-favAB">Casos favorables de A ∩ B</label>
+          <input type="number" id="cond-favAB" min="0" step="1" />
+        </div>
+
+        <button class="btn-calc" type="button" onclick="calcularProbCondicionalCasos()">
+          Calcular P(B | A)
+        </button>
+      </div>
+
+      <p id="cond-resultado" class="resultado"></p>
+    </section>
+
+    <!-- diferencias -->
+    <section class="card fade">
+      <h2>Diferencia entre eventos</h2>
+      <p>
+        Para analizar si dos eventos son <strong>independientes</strong> o
+        <strong>dependientes</strong>, comparamos la probabilidad condicional
+        <strong>P(B | A)</strong> con la probabilidad simple <strong>P(B)</strong>:
+      </p>
+
+      <div class="formula-box">
+        <img src="Imagenes/dependencia.png"
+             alt="Comparación entre P(B | A) y P(B)"
+             class="formula-img">
+      </div>
+
+      <div class="vars-list">
+        <ul>
+          <li><strong>Si P(B | A) ≈ P(B):</strong> A y B se comportan como eventos independientes.</li>
+          <li><strong>Si P(B | A) es muy distinta de P(B):</strong> A y B son dependientes.</li>
+        </ul>
+      </div>
+
+      <h3>Cálculo a partir de conteos</h3>
+      <p>
+        Usando los datos de una tabla (N observaciones), podemos calcular P(B),
+        P(B | A) y ver si se trata de eventos dependientes o independientes.
+      </p>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="dep2-N">Casos posibles totales (N)</label>
+          <input type="number" id="dep2-N" min="1" step="1" />
+        </div>
+      </div>
+
+      <div class="form-row">
+        <div class="field-group">
+          <label for="dep2-favA">Casos favorables de A</label>
+          <input type="number" id="dep2-favA" min="0" step="1" />
+        </div>
+        <div class="field-group">
+          <label for="dep2-favB">Casos favorables de B</label>
+          <input type="number" id="dep2-favB" min="0" step="1" />
+        </div>
+        <div class="field-group">
+          <label for="dep2-favAB">Casos favorables de A ∩ B</label>
+          <input type="number" id="dep2-favAB" min="0" step="1" />
+        </div>
+
+        <button class="btn-calc" type="button" onclick="analizarDependenciaCasos()">
+          Analizar dependencia
+        </button>
+      </div>
+
+      <p id="dep2-resultado" class="resultado"></p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <p>Proyecto final de Estadística I · 2025</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Distribuciones de probabilidad — Discretas</title>
+
+  <link rel="stylesheet" href="Estilo.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1"></script>
+
+  <style>
+    .chart-wrap { margin-top: 16px; background:#0f1a25; border-radius:14px; padding:16px; }
+    .chart-wrap canvas { width:100%; height:340px; }
+    .grid-3 { display:grid; grid-template-columns: repeat(3, 1fr); gap:12px; }
+    .grid-2 { display:grid; grid-template-columns: repeat(2, 1fr); gap:12px; }
+    .muted { opacity:.85; font-size:.95rem; }
+    .card h3 { margin-top:0; }
+    .monosmall { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.95rem; }
+  </style>
+</head>
+<body>
+
+  <header class="topbar">
+    <img src="Imagenes/logo.png" alt="Logo UMG" class="logo">
+    <a href="Acerca.html" class="about-btn">Acerca de</a>
+    <a href="index.html" class="home-btn">Inicio</a>
+    <h1>Distribuciones de probabilidad — Discretas</h1>
+  </header>
+
+  <main class="container">
+
+    <!-- bonomial -->
+    <section class="card fade">
+    <h2>Distribución Binomial</h2>
+    <p class="muted">
+        Utilizada para calcular la probabilidad de tener cierto número de éxitos en
+        una serie de ensayos independientes con probabilidad de éxito p.
+    </p>
+
+    <div class="formula-box">
+        <img src="Imagenes/binomial.png"
+            alt="P(X=x) = C(n,x) · p^x · (1-p)^{n-x}"
+            class="formula-img">
+    </div>
+    <div class="vars-list">
+        <ul>
+          <li><strong>n:</strong> numero de ensayos.
+              (por ejemplo: lanzar una moneda 8 veces n = 8).</li>
+          <li><strong>p:</strong> probabilidad de éxito.
+              (por ejemplo: probabilidad de obtener cara p = 0.5).</li>
+          <li><strong>x:</strong> número de éxitos que se está buscando
+              (por ejemplo: obtener cara 3 veces x = 3).</li>
+        </ul>
+    </div>
+    </p>
+    <div class="grid-3">
+        <div class="field-group">
+        <label for="binom-n">n</label>
+        <input type="number" id="binom-n" placeholder="n (número de ensayos)">
+        </div>
+
+        <div class="field-group">
+        <label for="binom-p">p</label>
+        <input type="number" id="binom-p" step="0.01" placeholder="p (probabilidad de éxito)">
+        </div>
+
+        <div class="field-group">
+        <label for="binom-k">x</label>
+        <input type="number" id="binom-k" placeholder="x (éxitos)">
+        </div>
+    </div>
+
+    <div class="row">
+        <label for="binom-mode" class="mr-2">Tipo de cálculo:</label>
+        <select id="binom-mode">
+        <option value="exact">Exactamente x</option>
+        <option value="atleast">Al menos x (X ≥ x)</option>
+        <option value="atmost">A lo sumo x (X ≤ x)</option>
+        </select>
+    </div>
+
+    <button class="btn-calc" type="button" onclick="calcBinomial()">Calcular</button>
+
+    <p id="binom-res" class="resultado"></p>
+    <p id="binom-interp" class="nota"></p>
+
+    <div class="chart-wrap">
+        <h3>Distribución completa P(X = x)</h3>
+        <canvas id="binomChart"></canvas>
+    </div>
+    </section>
+
+    <!-- binomial negativa -->
+    <section class="card fade">
+      <h2>Distribución Binomial Negativa</h2>
+      <p class="muted">
+        Probabilidad de que el <strong>r-ésimo éxito</strong> ocurra en el intento <span class="monosmall">x ≥ r</span>,
+        con probabilidad de éxito <span class="monosmall">p</span> en cada intento.
+        <br>PMF: <span class="monosmall">P(X=x) = C(x−1, r−1)·p^r·(1−p)^{x−r}</span>
+      </p>
+      <div class="formula-box">
+        <img src="Imagenes/binomial_negativa.png"
+        alt="Fórmula (X=x) = (n-1Cr-1)p^x(1-p)^x-r"
+        class="formula-img">
+        </div>
+      <div class="vars-list">
+        <ul>
+          <li><strong>x:</strong> número de intentos
+              (por ejemplo: se hacen 10 tiros x = 10).</li>
+          <li><strong>p:</strong> probabilidad de éxito.
+              (por ejemplo: probabilidad de que sea un tiro bueno p = 0.8).</li>
+          <li><strong>r:</strong> éxito buscado.
+              (por ejemplo: lograr el tercer éxito r = 3).</li>
+        </ul>
+    </div>
+    </p>
+      <div class="grid-3">
+        <div class="field-group">
+          <label for="negb-x">x</label>
+          <input id="negb-x" type="number" placeholder="x (número de intentos)">
+        </div>
+        <div class="field-group">
+          <label for="negb-p">p</label>
+          <input id="negb-p" type="number" placeholder="p (probabilidad de éxito)">
+        </div>
+        
+        <div class="field-group">
+          <label for="negb-r">r</label>
+          <input id="negb-r" type="number" placeholder="r (éxito objetivo)">
+        </div>
+      </div>
+
+      <button class="btn-calc" type="button" onclick="calcNegBin()">Calcular</button>
+      <p id="negb-res" class="resultado"></p>
+
+      <div class="chart-wrap">
+        <h3>Distribución P(X = x)</h3>
+        <canvas id="negbChart"></canvas>
+      </div>
+    </section>
+
+    <!-- poson  -->
+    <section class="card fade">
+      <h2>Distribución de Poisson</h2>
+      <p class="muted">
+        Modela el número de eventos en un intervalo cuando los sucesos ocurren de forma rara e independiente,
+        con tasa media <span class="monosmall">λ</span>.
+        <br>PMF: <span class="monosmall">P(X = k) = e^{-λ} · λ^k / k!</span>
+      </p>
+
+      <div class="formula-box">
+        <img src="Imagenes/poson.png" alt="Fórmula P(X=k) = e^{-λ} λ^k / k!" class="formula-img">
+      </div>
+      <div class="vars-list">
+        <ul>
+          <li><strong>λ (lambda):</strong> promedio del evento.
+              (por ejemplo: cuatro clientes en una hora λ = 4).</li>
+          <li><strong>k:</strong> cantidad de eventos a calcular.
+              (por ejemplo: 2 errores k = 2).</li>
+          <li><strong>e (euler):</strong> constante matemática que siempre es igual a 2.71828...
+        </ul>
+    </div>
+    </p>
+      <div class="grid-2">
+        <div class="field-group">
+          <label for="pois-l">λ </label>
+          <input id="pois-l" type="number" min="0" step="0.1" placeholder="promedio">
+        </div>
+        <div class="field-group">
+          <label for="pois-k">k</label>
+          <input id="pois-k" type="number" min="0" step="1" placeholder="objetivo">
+        </div>
+      </div>
+
+      <div class="row">
+        <label for="pois-mode" class="mr-2">Tipo de cálculo:</label>
+        <select id="pois-mode">
+          <option value="exact">Exactamente k</option>
+          <option value="atmost">A lo sumo k (X ≤ k)</option>
+          <option value="atleast">Al menos k (X ≥ k)</option>
+        </select>
+      </div>
+
+      <button class="btn-calc" type="button" onclick="calcPoisson()">Calcular</button>
+      <p id="pois-res" class="resultado"></p>
+
+      <div class="chart-wrap">
+        <h3>Distribución P(X = k)</h3>
+        <canvas id="poisChart"></canvas>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
